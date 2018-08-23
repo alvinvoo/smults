@@ -1,0 +1,8 @@
+.searchBar{
+  display: flex;
+  margin: 2em 0;
+}
+
+.searchBar > .ui.positive.button{
+  margin-left: 1em;
+}
