@@ -1,5 +1,4 @@
-import {FETCH_TRENDING_TAGS, FETCH_POSTS} from '../actions';
-import {xor} from 'lodash';
+import {FETCH_TRENDING_TAGS} from '../actions';
 
 const initialState ={
   trending_tags_options: [
@@ -8,8 +7,6 @@ const initialState ={
     {key: 'kr', value : 'kr', text: 'kr'},
     {key: 'steemit', value : 'steemit', text: 'steemit'},
     {key: 'art', value : 'art', text: 'art'}],
-  selected_tags: [],
-  posts: []
 }
 
 export default function(state=initialState,action){
@@ -20,12 +17,7 @@ export default function(state=initialState,action){
       const new_trending_tags_options = trending_tags.filter(tag => tag.name).map(tag=>{
         return {key: tag.name, value: tag.name, text: tag.name};
       });
-      // console.log(new_trending_tags_options);
       return {...state, trending_tags_options:[...new_trending_tags_options]};
-    case FETCH_POSTS:
-      console.log('fetch posts');
-      const posts = [...action.payload];
-      return {...state, posts:[...action.payload]};
     default:
       return state;
   }

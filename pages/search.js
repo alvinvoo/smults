@@ -1,14 +1,16 @@
 import React, {Component} from 'react';//work with components
 import {Dropdown, Button, Checkbox, Popup, Icon} from 'semantic-ui-react';
 import Layout from '../components/Layout';
-import '../css/style.css';
+import PostList from '../components/PostList';
 import {connect} from 'react-redux';
 import {fetchTrendingTags,fetchPosts} from '../actions';
+import {take} from 'lodash';
 
 class Search extends Component{
 
   state = {
     tagsOptions : [],
+    selectedTags: [],
     filterOptions: [
       {text:'New', value:'created'},
       {text:'Trending', value:'trending'},
@@ -16,7 +18,7 @@ class Search extends Component{
       {text:'Active', value:'active'},
       {text:'Promoted', value:'promoted'}
     ],
-    selectedTags: ''
+    selectedFilter:'created'
   }
 
   componentDidMount(){
@@ -27,13 +29,11 @@ class Search extends Component{
 
   dropDownChange = (e,d) => {
     console.log('dropDownChange');
-    console.log(d);
-    this.setState({selectedTags: d.value})
+    this.setState({selectedTags: _.take(d.value,5)})
   }
 
   dropDownAddItem = (e,d) =>{
     console.log('dropDownAddItem');
-    console.log(d);
     let newTags = this.state.tagsOptions;
     newTags.unshift({key: d.value, value: d.value, text: d.value});
     this.setState({tagsOptions: newTags});
@@ -43,7 +43,13 @@ class Search extends Component{
     if(this.state.selectedTags.length===0)return;
     console.log('search');
     console.log(this.state.selectedTags);
-    this.props.fetchPosts(this.state.selectedTags[0]);
+    this.props.fetchPosts(this.state.selectedTags,this.state.selectedFilter);
+  }
+
+  filterChange = (e,d) =>{
+    console.log('filter change');
+    console.log(d.value);
+    this.setState({selectedFilter: d.value});
   }
 
   render(){
@@ -57,19 +63,29 @@ class Search extends Component{
           selection multiple search fluid allowAdditions
           options={this.state.tagsOptions}
           onAddItem={this.dropDownAddItem}
-          onChange={this.dropDownChange}/>
+          onChange={this.dropDownChange}
+          value={this.state.selectedTags}
+          />
           <Button positive
           onClick={this.search}> Search </Button>
         </div>
         <div className="searchOptionsBar">
           <div>
           Filter tags by {' '}
-          <Dropdown inline options={this.state.filterOptions} defaultValue={this.state.filterOptions[0].value}/>
+          <Dropdown
+          inline
+          options={this.state.filterOptions}
+          onChange={this.filterChange}
+          value={this.state.selectedFilter}
+          />
           </div>
           <div className="markyTag">
             <Checkbox label='Mark tag as category' />
             <Popup trigger={<Icon name='question circle outline' />} content='Return search results which match the given first tag as their categories.' />
           </div>
+        </div>
+        <div className="postList">
+          <PostList/>
         </div>
       </Layout>
     )

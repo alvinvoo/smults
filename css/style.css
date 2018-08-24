@@ -3,6 +3,10 @@
   margin: 2em 0;
 }
 
+.searchBar > .ui.positive.button{
+  margin-left: 1em;
+}
+
 .searchOptionsBar{
   display: flex;
 }
@@ -17,6 +21,14 @@
   cursor: pointer;
 }
 
-.searchBar > .ui.positive.button{
-  margin-left: 1em;
+.postList{
+  padding: 3em 3em;
+}
+
+.postList> .ui.items > .item:hover{
+  background-color: #e9e8e8;
+}
+
+.postList> .ui.items > .item .extra > .icon:not(:first-child){
+  padding-left: .4em;
 }

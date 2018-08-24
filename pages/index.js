@@ -1,4 +1,5 @@
 import React, {Component} from 'react';//work with components
+import '../css/style.css';
 import Search from './search';
 
 import {connect} from 'react-redux';
