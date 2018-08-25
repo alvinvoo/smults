@@ -23,7 +23,7 @@ class Header extends Component{
         <Message>
           <Message.Header as='h1'>Steem MULti Tags Search <i>(a.k.a smults)</i></Message.Header>
           <p>
-            This website aims to improve the search quality of <a href="https://www.steemit.com" target="_blank">steemit.com</a>.
+            This web application aims to improve the search quality of <a href="https://www.steemit.com" target="_blank">steemit.com</a>.
             Up to 5 tags can be searched using the search bar.
             Head over to the <Link route='/about'><a>about</a></Link> tab for more info.
           </p>

@@ -3,7 +3,6 @@ import Search from './search';
 
 import {connect} from 'react-redux';
 
-
 class Index extends Component{
 
   static getInitialProps({ reduxStore, req }) {

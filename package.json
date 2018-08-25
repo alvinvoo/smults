@@ -11,6 +11,9 @@
     "start": "./node_modules/.bin/next start",
     "prod": "export NODE_ENV=production || SET \"NODE_ENV=production\" && node server.js"
   },
+  "engines": {
+    "node": "8.11.3"
+  },
   "author": "Alvin Voo",
   "license": "ISC",
   "dependencies": {
