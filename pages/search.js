@@ -2,6 +2,7 @@ import React, {Component} from 'react';//work with components
 import {Dropdown, Button, Checkbox, Popup, Icon} from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import PostList from '../components/PostList';
+import ScrollButton from '../components/ScrollButton';
 import {connect} from 'react-redux';
 import {fetchTrendingTags,fetchPosts} from '../actions';
 import {take} from 'lodash';
@@ -18,7 +19,9 @@ class Search extends Component{
       {text:'Active', value:'active'},
       {text:'Promoted', value:'promoted'}
     ],
-    selectedFilter:'created'
+    selectedFilter:'created',
+    checkedCategory: false,
+    searchLoading: false
   }
 
   componentDidMount(){
@@ -28,12 +31,10 @@ class Search extends Component{
   }
 
   dropDownChange = (e,d) => {
-    console.log('dropDownChange');
     this.setState({selectedTags: _.take(d.value,5)})
   }
 
   dropDownAddItem = (e,d) =>{
-    console.log('dropDownAddItem');
     let newTags = this.state.tagsOptions;
     newTags.unshift({key: d.value, value: d.value, text: d.value});
     this.setState({tagsOptions: newTags});
@@ -41,19 +42,25 @@ class Search extends Component{
 
   search = (e,d) => {
     if(this.state.selectedTags.length===0)return;
-    console.log('search');
-    console.log(this.state.selectedTags);
-    this.props.fetchPosts(this.state.selectedTags,this.state.selectedFilter);
+    this.setState({searchLoading: true});
+    this.props.fetchPosts(this.state.selectedTags,
+      this.state.selectedFilter,
+      this.state.checkedCategory).catch(err=>{
+      console.log(err);
+      window.alert('Sorry, something is broken. Press F12, take a screenshot of the console and notify https://steemit.com/@alvinvoo');
+    });
+    this.setState({searchLoading: false});
   }
 
   filterChange = (e,d) =>{
-    console.log('filter change');
-    console.log(d.value);
     this.setState({selectedFilter: d.value});
   }
 
+  checkBoxCategory = (e,d) =>{
+    this.setState({checkedCategory: d.checked});
+  }
+
   render(){
-    console.log('index rendering');
     return(
       <Layout item='search'>
         <div className="searchBar">
@@ -66,7 +73,7 @@ class Search extends Component{
           onChange={this.dropDownChange}
           value={this.state.selectedTags}
           />
-          <Button positive
+          <Button positive loading={this.state.searchLoading}
           onClick={this.search}> Search </Button>
         </div>
         <div className="searchOptionsBar">
@@ -80,13 +87,14 @@ class Search extends Component{
           />
           </div>
           <div className="markyTag">
-            <Checkbox label='Mark tag as category' />
+            <Checkbox label='Mark tag as category' onChange={this.checkBoxCategory} checked={this.state.checkedCategory}/>
             <Popup trigger={<Icon name='question circle outline' />} content='Return search results which match the given first tag as their categories.' />
           </div>
         </div>
         <div className="postList">
           <PostList/>
         </div>
+        <ScrollButton scrollStepInPx="50" delayInMs="16.66"/>
       </Layout>
     )
   }

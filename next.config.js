@@ -13,6 +13,6 @@ module.exports = withCSS({
         }
       })
     }
-      return config
+    return config
   }
 })

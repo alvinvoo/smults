@@ -1,13 +1,9 @@
 import * as dsteem from 'dsteem'
-
+import {STEEM_API, MAX_TAGS, MAX_POSTS} from '../config.js';
 export const FETCH_TRENDING_TAGS = 'FETCH_TRENDING_TAGS';
 export const STORE_SELECTED_TAGS = 'STORE_SELECTED_TAGS';
 export const FETCH_AND_FILTER_POSTS = 'FETCH_AND_FILTER_POSTS';
-export const FILTER_POSTS = 'FILTER_POSTS';
 
-const STEEM_API = 'https://api.steemit.com';
-const MAX_TAGS = 16; //15 including the empty string
-const MAX_POSTS = 100;
 const client = new dsteem.Client(STEEM_API);
 
 export function fetchTrendingTags(){
@@ -21,10 +17,10 @@ export function fetchTrendingTags(){
   };
 }
 
-function storeSelectedTags(tags){
+function storeSelectedTags(tags,checkedCategory){
   return{
     type: STORE_SELECTED_TAGS,
-    payload: tags
+    payload: {tags,checkedCategory}
   }
 }
 
@@ -38,11 +34,11 @@ function fetchAndFilterPosts(tag,filter){
 }
 
 //1. store selected tags, 2. fetch posts based on first tag, 3. filter post with XOR function
-export function fetchPosts(tags,filter){
+export function fetchPosts(tags,filter,checkedCategory){
   if(tags.length===0)return;
   return(dispatch)=>{
 
-    dispatch(storeSelectedTags(tags));
-    dispatch(fetchAndFilterPosts(tags[0],filter));
+    dispatch(storeSelectedTags(tags,checkedCategory));
+    return dispatch(fetchAndFilterPosts(tags[0],filter));
   };
 }

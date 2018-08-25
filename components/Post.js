@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, Item, Icon, Label} from 'semantic-ui-react';
 
 export default props => {
-  const {image, title, author, category, created, body, pending_payout_value, net_votes, children, url} = props.post;
+  const {image, title, author, category, created, body, pending_payout_value, net_votes, children, tags, url} = props.post;
 
   return(
       <Item href={url} target="_blank">
@@ -13,7 +13,17 @@ export default props => {
           <Item.Description>
             {body}
           </Item.Description>
-          <Item.Extra><Icon name='dollar'/>{pending_payout_value}    <Icon name='sort up'/>{net_votes}    <Icon name='comment outline'/>{children}</Item.Extra>
+          <Item.Extra>
+            <Icon name='dollar'/>{pending_payout_value}
+            <Icon name='sort up'/>{net_votes}
+            <Icon name='comment outline'/>{children}
+            <span style={{margin:"0 .5em"}}></span>
+            {
+              tags.map((tag,index) => {
+                return <Label key={index}>{tag}</Label>
+              })
+            }
+          </Item.Extra>
         </Item.Content>
       </Item>
   )

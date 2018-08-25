@@ -12,7 +12,6 @@ const initialState ={
 export default function(state=initialState,action){
   switch(action.type){
     case FETCH_TRENDING_TAGS:
-      console.log('fetch_trending_tags');
       const trending_tags = [...action.payload];
       const new_trending_tags_options = trending_tags.filter(tag => tag.name).map(tag=>{
         return {key: tag.name, value: tag.name, text: tag.name};

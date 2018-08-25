@@ -1,5 +1,5 @@
-import {STORE_SELECTED_TAGS,FETCH_AND_FILTER_POSTS,FILTER_POSTS} from '../actions';
-import {POSTFIELDS,DEFAULTIMG} from './config.js';
+import {STORE_SELECTED_TAGS,FETCH_AND_FILTER_POSTS} from '../actions';
+import {POSTFIELDS,DEFAULTIMG} from '../config.js';
 
 import {isEqual, intersection, pick} from 'lodash';
 import removeMd from 'remove-markdown';
@@ -7,16 +7,15 @@ import moment from 'moment';
 
 const initialState ={
   posts: [],
-  selectedTags: []
+  selectedTags: [],
+  firstTagIsCategory: false
 }
 
 export default function(state=initialState,action){
   switch(action.type){
     case STORE_SELECTED_TAGS:
-      console.log('store tags');
-      return {...state, selectedTags:[...action.payload]};
+      return {...state, selectedTags:[...action.payload.tags], firstTagIsCategory:action.payload.checkedCategory};
     case FETCH_AND_FILTER_POSTS:
-      console.log('fetch posts');
       // [...c].map(it=> {return _.pick(it,['id'])})
       const posts = [...action.payload].filter(post=>{
         //first get the tags
@@ -24,14 +23,18 @@ export default function(state=initialState,action){
         const tags = json.tags? json.tags: '';
         if(tags==='') return false;
         const selectedTags = [...state.selectedTags];
-        console.log('post tags');
-        console.log(tags);
-        console.log('selectedTags');
-        console.log(selectedTags);
-        //source should contain all the selected tags, regardless the order
-        //if after intersect is equal back to the selected tags, means it matches
-        const ret = _.isEqual(selectedTags,_.intersection(selectedTags,tags))
-        console.log(ret);
+        const {firstTagIsCategory} = state;
+
+        let ret = false;
+        //if check box is ticked, check whether first tag equals to selected first tag
+        if(firstTagIsCategory){
+          if(selectedTags[0]===tags[0]) ret = _.isEqual(selectedTags,_.intersection(selectedTags,tags));
+        }else{
+          //source should contain all the selected tags, regardless of the order
+          //if after intersect is equal back to the selected tags, means it matches
+          ret = _.isEqual(selectedTags,_.intersection(selectedTags,tags));
+        }
+
         return ret;
 
         }
@@ -57,9 +60,6 @@ export default function(state=initialState,action){
       });
 
       return {...state, posts};
-    case FILTER_POSTS:
-      console.log('filter posts');
-      return state;
     default:
       return state;
   }
