@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "next": "./node_modules/.bin/next",
+    "build": "./node_modules/.bin/next build",
+    "start": "./node_modules/.bin/next start",
+    "prod": "export NODE_ENV=production || SET \"NODE_ENV=production\" && node server.js"
   },
   "author": "Alvin Voo",
   "license": "ISC",

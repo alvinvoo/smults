@@ -10,7 +10,6 @@ class Index extends Component{
     //this is the initial props function in server
     const isServer = !!req;
     console.log('server alive? ',isServer);
-
     return {};
   }
 
