@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
-    "prod": "export NODE_ENV=production || SET \"NODE_ENV=production\" && node server.js",
+    "prod": "export NODE_ENV=production || SET \"NODE_ENV=production\" && ./node_modules/.bin/next build && node server.js",
     "next": "./node_modules/.bin/next",
     "next_build": "./node_modules/.bin/next build",
     "next_start": "./node_modules/.bin/next start",
-    "start": "./node_modules/.bin/next build && node server.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": "8.11.3"

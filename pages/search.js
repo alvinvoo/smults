@@ -87,7 +87,7 @@ class Search extends Component{
           />
           </div>
           <div className="markyTag">
-            <Checkbox label='Mark tag as category' onChange={this.checkBoxCategory} checked={this.state.checkedCategory}/>
+            <Checkbox label='Mark first tag as category' onChange={this.checkBoxCategory} checked={this.state.checkedCategory}/>
             <Popup trigger={<Icon name='question circle outline' />} content='Return search results which match the given first tag as their categories.' />
           </div>
         </div>
