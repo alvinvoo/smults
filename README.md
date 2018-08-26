@@ -3,6 +3,7 @@
 [steemit.com](https://steemit.com) allows searches by using only ONE tag while [busy.org](https://busy.org/) searches by single user's name. This is inconvenient for those who need to look for more specific posts. [Smults](https://smults-search.appspot.com) allows for multiple tags search and the ability to mark first tag as category.
 
 ## Introduction
+Click image to view youtube video  
 [![Smults Intro video](https://github.com/Alvin-Voo/smults/raw/master/Screenshot1.png)](http://www.youtube.com/watch?v=SWYt4bGmN7w)
 
 ## Getting Started
