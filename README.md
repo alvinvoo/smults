@@ -24,8 +24,9 @@ For production:
 
 ### TODO
 1. [MUST]Explore unit testing with Jest and Enzyme
-2. [UI - Enchancement]Clickable author and category links
-3. [UI + FUNCTIONAL - Potential Enchancement]Results order are haphazard. Sort results by ascending or descending time.
-4. [UI - Potential Enchancement]Sortable/Movable tags in search bar. Such that first tag can be changed.
-5. [UI + FUNCTIONAL - Potential Enchancement]Feeling lucky - Random filter + random (not so popular tags) tags search results.
-6. [UI - Potential Enchancement]It could be good if author reputation are displayed
+2. [UI - Enhancement]Clickable author and category links
+3. [UI + FUNCTIONAL - Enhancement]Filter by author
+4. [UI + FUNCTIONAL - Potential Enhancement]Results order sometimes are haphazard. Sort results by ascending or descending time.
+5. [UI - Potential Enchancement]Sortable/Movable tags in search bar. Such that first tag can be changed.
+6. [UI + FUNCTIONAL - Potential Enhancement]Feeling lucky - Random filter + random (not so popular tags) tags search results.
+7. [UI - Potential Echancement]It could be good if author reputation are displayed
