@@ -39,3 +39,7 @@
 .postList> .ui.items > .item .extra > .icon:not(:first-child){
   padding-left: .4em;
 }
+
+.aboutDiv{
+  margin: 2em auto;
+}

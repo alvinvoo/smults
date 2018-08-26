@@ -6,7 +6,32 @@ class About extends Component{
   render(){
     return(
       <Layout item='about'>
-        About
+        <div className="aboutDiv">
+          <h2>Intro video</h2>
+          <iframe width="750" height="425" src="https://www.youtube.com/embed/SWYt4bGmN7w"
+          frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+        </div>
+        <div className="aboutDiv">
+          <h3>Why smults?</h3>
+          <p><a href="https://steemit.com" target="_blank">steemit.com</a> allows searches by using only ONE tag,
+          while <a href="https://busy.org/" target="_blank">busy.org</a> searches by single user&apos;s name,
+          this is inconvenient for those who need to look for more specific posts.
+          Smults is here to address this issue!</p>
+          <h3>Can I add custom tags in the search bar?</h3>
+          <p>Sure! Just start typing and press &apos;Enter&apos; to include the tag(s) when you are done!</p>
+          <h3>Why &apos;15&apos; trending tags to start with? Why not &apos;18&apos; or &apos;23&apos;?</h3>
+          <p>Well.. That&apos;s just my personal preference ;). You can add more custom search tags by youself!</p>
+          <h3>What is this &apos;Mark first tag as category&apos; checkbox thing?</h3>
+          <p>When you mark it and search, the return results will have their categories as the first tag you are searching for. Isn&apos;t that just convenient? ;)</p>
+          <h3>I spotted a nasty error/bug.. Where can I report it?</h3>
+          <p>Head over to this project&apos;s <a href="https://github.com/Alvin-Voo/smults" target="_blank">github page</a> and log an issue.</p>
+          <h3>I have a great idea for your application! I want to contribute!</h3>
+          <p>Great! Let me know at <a href="https://steemit.com/@alvinvoo" target="_blank">@alvinvoo</a>, comment on my post which announces
+          this project, or you can visit this project&apos;s <a href="https://github.com/Alvin-Voo/smults" target="_blank">github page</a> and log an issue but
+          with the title starting with &apos;[FEATURE]&apos;</p>
+          <h3>Is this free?</h3>
+          <p>Of course! I will let you know when it&apos;s not. ;)</p>
+        </div>
       </Layout>
     )
   }
