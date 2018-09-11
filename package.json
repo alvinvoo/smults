@@ -10,7 +10,10 @@
     "next": "./node_modules/.bin/next",
     "next_build": "./node_modules/.bin/next build",
     "next_start": "./node_modules/.bin/next start",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "./node_modules/.bin/eslint actions/ components/ pages/ reducers/ config.js",
+    "lint-fix": "./node_modules/.bin/eslint --fix actions/ components/ pages/ reducers/ config.js",
+    "lint-export": "./node_modules/.bin/eslint --print-config .eslintrc.json  > alleslintconfig"
   },
   "engines": {
     "node": "8.x.x"
@@ -24,6 +27,7 @@
     "moment": "^2.22.2",
     "next": "^6.1.1",
     "next-routes": "^1.4.2",
+    "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
@@ -36,6 +40,12 @@
     "semantic-ui-react": "^0.82.2"
   },
   "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
     "file-loader": "^1.1.11",
     "url-loader": "^1.1.1"
   }
