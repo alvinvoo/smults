@@ -1,107 +1,156 @@
-import React, {Component} from 'react';//work with components
-import {Dropdown, Button, Checkbox, Popup, Icon} from 'semantic-ui-react';
+import React, { Component } from 'react';// work with components
+import PropTypes from 'prop-types';
+import {
+  Dropdown, Button, Checkbox, Popup, Icon,
+} from 'semantic-ui-react';
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^take" }] */
+import { take } from 'lodash';
+import { connect } from 'react-redux';
 import Layout from '../components/Layout';
 import PostList from '../components/PostList';
 import ScrollButton from '../components/ScrollButton';
-import {connect} from 'react-redux';
-import {fetchTrendingTags,fetchPosts} from '../actions';
-import {take} from 'lodash';
+import { fetchTrendingTags, fetchPosts } from '../actions';
 
-class Search extends Component{
-
+class Search extends Component {
   state = {
-    tagsOptions : [],
+    tagsOptions: [],
     selectedTags: [],
     filterOptions: [
-      {text:'New', value:'created'},
-      {text:'Trending', value:'trending'},
-      {text:'Hot', value:'hot'},
-      {text:'Active', value:'active'},
-      {text:'Promoted', value:'promoted'}
+      { text: 'New', value: 'created' },
+      { text: 'Trending', value: 'trending' },
+      { text: 'Hot', value: 'hot' },
+      { text: 'Active', value: 'active' },
+      { text: 'Promoted', value: 'promoted' },
     ],
-    selectedFilter:'created',
+    selectedFilter: 'created',
     checkedCategory: false,
-    searchLoading: false
+    searchLoading: false,
+    error: '',
   }
 
-  componentDidMount(){
-    this.props.fetchTrendingTags().then(data=>{
-      this.setState({tagsOptions: this.props.tags.trending_tags_options});
-    });//we only want to fetch in client side once
+  componentDidMount() {
+    const { fetchTrendingTags } = this.props;
+    fetchTrendingTags().then(() => {
+      const { tagsOptions } = this.props;
+      this.setState({ tagsOptions });
+    });// we only want to fetch in client side once
   }
 
-  dropDownChange = (e,d) => {
-    this.setState({selectedTags: _.take(d.value,5)})
+  dropDownChange = (e, d) => {
+    this.setState({ selectedTags: _.take(d.value, 5) });
   }
 
-  dropDownAddItem = (e,d) =>{
-    let newTags = this.state.tagsOptions;
-    newTags.unshift({key: d.value, value: d.value, text: d.value});
-    this.setState({tagsOptions: newTags});
-  }
-
-  search = (e,d) => {
-    if(this.state.selectedTags.length===0)return;
-    this.setState({searchLoading: true});
-    this.props.fetchPosts(this.state.selectedTags,
-      this.state.selectedFilter,
-      this.state.checkedCategory).catch(err=>{
-      console.log(err);
-      window.alert('Sorry, something is broken. Press F12, take a screenshot of the console and notify https://steemit.com/@alvinvoo');
+  dropDownAddItem = (e, d) => {
+    this.setState((prevState) => {
+      const newTags = prevState.tagsOptions;
+      newTags.unshift({ key: d.value, value: d.value, text: d.value });
+      return { tagsOptions: newTags };
     });
-    this.setState({searchLoading: false});
   }
 
-  filterChange = (e,d) =>{
-    this.setState({selectedFilter: d.value});
+  search = () => {
+    const { selectedTags, selectedFilter, checkedCategory } = this.state;
+    const { fetchPosts } = this.props;
+    if (selectedTags.length === 0) return;
+    this.setState({ searchLoading: true, error: '' });
+    fetchPosts(selectedTags, selectedFilter, checkedCategory).catch(
+      (error) => {
+        this.setState({ error: String(error) });
+      },
+    );
+    this.setState({ searchLoading: false });
   }
 
-  checkBoxCategory = (e,d) =>{
-    this.setState({checkedCategory: d.checked});
+  filterChange = (e, d) => {
+    this.setState({ selectedFilter: d.value });
   }
 
-  render(){
-    return(
-      <Layout item='search'>
+  checkBoxCategory = (e, d) => {
+    this.setState({ checkedCategory: d.checked });
+  }
+
+  displayError = () => {
+    const { error } = this.state;
+    if (error) {
+      return (
+        <div className="error">
+          <p>{error}</p>
+          <p>
+            Sorry, something is broken. Take a screenshot and notify
+            <a href="https://steemit.com/@alvinvoo" target="_blank" rel="noopener noreferrer">
+              {' '}
+              @alvinvoo
+            </a>
+          </p>
+        </div>
+      );
+    }
+  }
+
+  render() {
+    const {
+      tagsOptions, selectedTags, filterOptions, selectedFilter, searchLoading, checkedCategory,
+    } = this.state;
+    return (
+      <Layout item="search">
         <div className="searchBar">
           <Dropdown
-          icon="search"
-          placeholder="Insert your tags here..."
-          selection multiple search fluid allowAdditions
-          options={this.state.tagsOptions}
-          onAddItem={this.dropDownAddItem}
-          onChange={this.dropDownChange}
-          value={this.state.selectedTags}
+            icon="search"
+            placeholder="Insert your tags here..."
+            selection
+            multiple
+            search
+            fluid
+            allowAdditions
+            options={tagsOptions}
+            onAddItem={this.dropDownAddItem}
+            onChange={this.dropDownChange}
+            value={selectedTags}
           />
-          <Button positive loading={this.state.searchLoading}
-          onClick={this.search}> Search </Button>
+          <Button
+            positive
+            loading={searchLoading}
+            onClick={this.search}
+          >
+            {' '}
+            Search
+          </Button>
         </div>
         <div className="searchOptionsBar">
           <div>
-          Filter tags by {' '}
-          <Dropdown
-          inline
-          options={this.state.filterOptions}
-          onChange={this.filterChange}
-          value={this.state.selectedFilter}
-          />
+          Filter tags by
+            {' '}
+            {' '}
+            <Dropdown
+              inline
+              options={filterOptions}
+              onChange={this.filterChange}
+              value={selectedFilter}
+            />
           </div>
           <div className="markyTag">
-            <Checkbox label='Mark first tag as category' onChange={this.checkBoxCategory} checked={this.state.checkedCategory}/>
-            <Popup trigger={<Icon name='question circle outline' />} content='Return search results which match the given first tag as their categories.' />
+            <Checkbox label="Mark first tag as category" onChange={this.checkBoxCategory} checked={checkedCategory} />
+            <Popup trigger={<Icon name="question circle outline" />} content="Return search results which match the given first tag as their categories." />
           </div>
         </div>
         <div className="postList">
-          <PostList/>
+          <PostList />
+          {this.displayError()}
         </div>
-        <ScrollButton scrollStepInPx="50" delayInMs="16.66"/>
+        <ScrollButton scrollStepInPx={50} delayInMs={16.66} />
       </Layout>
-    )
+    );
   }
 }
 
-function mapStateToProps({tags}){
-  return {tags};
+Search.propTypes = {
+  fetchPosts: PropTypes.func.isRequired,
+  fetchTrendingTags: PropTypes.func.isRequired,
+  tagsOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+};
+
+function mapStateToProps({ tags }) {
+  return { tagsOptions: tags.trending_tags_options };
 }
 
-export default connect(mapStateToProps,{fetchTrendingTags,fetchPosts})(Search);
+export default connect(mapStateToProps, { fetchTrendingTags, fetchPosts })(Search);
