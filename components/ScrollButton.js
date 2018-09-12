@@ -1,31 +1,42 @@
-import React, {Component} from 'react';
-import {Button} from 'semantic-ui-react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Button } from 'semantic-ui-react';
 
 class ScrollButton extends Component {
-
   state={
-    intervalId: 0
+    intervalId: 0,
   }
 
-  scrollStep=()=> {
+  scrollStep=() => {
+    const { intervalId } = this.state;
+    const { scrollStepInPx } = this.props;
     if (window.pageYOffset === 0) {
-        clearInterval(this.state.intervalId);
+      clearInterval(intervalId);
     }
-    window.scroll(0, window.pageYOffset - this.props.scrollStepInPx);
+    window.scroll(0, window.pageYOffset - scrollStepInPx);
   }
 
-  scrollToTop=()=> {
-    let intervalId = setInterval(this.scrollStep, this.props.delayInMs);
-    this.setState({ intervalId: intervalId });
+  scrollToTop=() => {
+    const { delayInMs } = this.props;
+    const intervalId = setInterval(this.scrollStep, delayInMs);
+    this.setState({ intervalId });
   }
 
-  render () {
-      return (
-        <Button className="scrollButton" title='Back to top' icon="angle double up"
-          onClick={this.scrollToTop}>
-        </Button>
-      );
-   }
+  render() {
+    return (
+      <Button
+        className="scrollButton"
+        title="Back to top"
+        icon="angle double up"
+        onClick={this.scrollToTop}
+      />
+    );
+  }
 }
+
+ScrollButton.propTypes = {
+  scrollStepInPx: PropTypes.number.isRequired,
+  delayInMs: PropTypes.number.isRequired,
+};
 
 export default ScrollButton;

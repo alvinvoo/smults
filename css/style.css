@@ -40,6 +40,14 @@
   padding-left: .4em;
 }
 
+.error{
+  color: red
+}
+
+.error>p:first-child{
+  font-style: italic;
+}
+
 .aboutDiv{
   margin: 2em auto;
 }

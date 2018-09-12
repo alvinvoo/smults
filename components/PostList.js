@@ -1,30 +1,27 @@
-import React, {Component} from 'react';
-import {Item} from 'semantic-ui-react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Item } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import Post from './Post';
-import {connect} from 'react-redux';
 
-class PostList extends Component{
-  componentDidMount(){
+const PostList = (props) => {
+  const { posts } = props;
+  return (
+    <Item.Group link>
+      {
+        posts.map(post => <Post post={post} key={post.id} />)
+      }
+    </Item.Group>
 
-  }
+  );
+};
 
-  render(){
-    const {posts} = this.props.posts;
-    return(
-      <Item.Group link>
-        {
-          posts.map((post, index)=>{
-            return <Post post={post} key={index}/>
-          })
-        }
-      </Item.Group>
+PostList.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
-    )
-  }
-}
-
-function mapStateToProps({posts}){
-  return {posts};
+function mapStateToProps({ posts }) {
+  return { posts: posts.posts, selectedTags: posts.selectedTags };
 }
 
 export default connect(mapStateToProps)(PostList);
