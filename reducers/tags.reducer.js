@@ -1,6 +1,6 @@
 import { FETCH_TRENDING_TAGS } from '../actions';
 
-const initialState = {
+export const initialState = {
   trending_tags_options: [
     { key: 'life', value: 'life', text: 'life' },
     { key: 'photography', value: 'photography', text: 'photography' },
