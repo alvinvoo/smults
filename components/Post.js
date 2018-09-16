@@ -19,11 +19,11 @@ export default function Post(props) {
         <Item.Meta>
           <Label color="purple">{author}</Label>
           {' '}
-in
+          in
           {' '}
           <Label color="teal" tag>{category}</Label>
           {' '}
-•
+          •
           {' '}
           {created}
         </Item.Meta>
