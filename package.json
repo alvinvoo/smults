@@ -4,8 +4,8 @@
   "description": "Steem MULti Tags Search",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && ./node_modules/.bin/jest",
+    "dev": "export NODE_ENV=development || SET \"NODE_ENV=test\" && node server.js",
     "prod": "export NODE_ENV=production || SET \"NODE_ENV=production\" && ./node_modules/.bin/next build && node server.js",
     "next": "./node_modules/.bin/next",
     "next_build": "./node_modules/.bin/next build",
@@ -17,6 +17,17 @@
   },
   "engines": {
     "node": "8.x.x"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/tests/setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/tests/__mocks__/styleMock.js"
+    }
   },
   "author": "Alvin Voo",
   "license": "ISC",
@@ -41,12 +52,19 @@
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "file-loader": "^1.1.11",
+    "jest": "^23.6.0",
+    "redux-mock-store": "^1.5.3",
     "url-loader": "^1.1.1"
   }
 }
