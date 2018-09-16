@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Basic rendering tests  should render Header correctly with "about" tab 1`] = `
+<div>
+  <Message>
+    <MessageHeader
+      as="h1"
+    >
+      Steem MULti Tags Search
+      <i>
+        (a.k.a smults)
+      </i>
+    </MessageHeader>
+    <p>
+      This web application aims to improve the search quality of
+       
+      <a
+        href="https://www.steemit.com"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        steemit.com
+      </a>
+      . Up to 5 tags can be searched using the search bar. Head over to the
+       
+      <LinkRoutes
+        route="/about"
+      >
+        <a>
+          about
+        </a>
+      </LinkRoutes>
+       
+      tab for more info.
+    </p>
+  </Message>
+  <Menu
+    pointing={true}
+    secondary={true}
+  >
+    <MenuItem
+      active={false}
+      name="search"
+      onClick={[Function]}
+    />
+    <MenuItem
+      active={true}
+      name="about"
+      onClick={[Function]}
+    />
+  </Menu>
+</div>
+`;
+
+exports[`Basic rendering tests  should render Header correctly with default "search" tab 1`] = `
+<div>
+  <Message>
+    <MessageHeader
+      as="h1"
+    >
+      Steem MULti Tags Search
+      <i>
+        (a.k.a smults)
+      </i>
+    </MessageHeader>
+    <p>
+      This web application aims to improve the search quality of
+       
+      <a
+        href="https://www.steemit.com"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        steemit.com
+      </a>
+      . Up to 5 tags can be searched using the search bar. Head over to the
+       
+      <LinkRoutes
+        route="/about"
+      >
+        <a>
+          about
+        </a>
+      </LinkRoutes>
+       
+      tab for more info.
+    </p>
+  </Message>
+  <Menu
+    pointing={true}
+    secondary={true}
+  >
+    <MenuItem
+      active={true}
+      name="search"
+      onClick={[Function]}
+    />
+    <MenuItem
+      active={false}
+      name="about"
+      onClick={[Function]}
+    />
+  </Menu>
+</div>
+`;
