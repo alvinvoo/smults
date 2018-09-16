@@ -4,7 +4,7 @@ import { Item } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Post from './Post';
 
-const PostList = (props) => {
+export const PostList = (props) => {
   const { posts } = props;
   return (
     <Item.Group link>
