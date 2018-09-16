@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Footer correctly 1`] = `
+<div
+  style={
+    Object {
+      "textAlign": "center",
+    }
+  }
+>
+  <p>
+    Copyleft © 2018
+     
+    <a
+      href="https://steemit.com/@alvinvoo"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      @alvinvoo
+    </a>
+     
+    || Fork it at
+     
+    <a
+      href="https://github.com/Alvin-Voo/smults"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      github!
+    </a>
+  </p>
+</div>
+`;

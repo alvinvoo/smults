@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render a single post correctly 1`] = `
+<Item
+  href="http://steemit.com/some-permlink"
+  target="_blank"
+>
+  <ItemImage
+    size="small"
+    src="http://image.com"
+  />
+  <ItemContent>
+    <ItemHeader>
+      this is a dummy title
+    </ItemHeader>
+    <ItemMeta>
+      <Label
+        color="purple"
+      >
+        dummy
+      </Label>
+       
+      in
+       
+      <Label
+        color="teal"
+        tag={true}
+      >
+        moon
+      </Label>
+       
+      •
+       
+      5 hours ago
+    </ItemMeta>
+    <ItemDescription>
+      text body
+    </ItemDescription>
+    <ItemExtra>
+      <Icon
+        as="i"
+        name="dollar"
+      />
+      65
+      <Icon
+        as="i"
+        name="sort up"
+      />
+      213
+      <Icon
+        as="i"
+        name="comment outline"
+      />
+      24
+      <span
+        style={
+          Object {
+            "margin": "0 .5em",
+          }
+        }
+      />
+      <Label
+        key="tag1"
+      >
+        tag1
+      </Label>
+      <Label
+        key="tag2"
+      >
+        tag2
+      </Label>
+      <Label
+        key="tag3"
+      >
+        tag3
+      </Label>
+    </ItemExtra>
+  </ItemContent>
+</Item>
+`;

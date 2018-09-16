@@ -1,0 +1,19 @@
+{
+    "env":{
+        "test":{
+            "presets": [
+                "env",
+                "react"
+              ],
+            "plugins":[
+                "transform-class-properties"
+            ]
+        },
+        "development":{
+            "presets":["next/babel"]
+        },
+        "production":{
+            "presets":["next/babel"]
+        }
+    }
+}

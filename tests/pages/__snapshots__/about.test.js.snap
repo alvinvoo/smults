@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render About page 1`] = `
+<Layout
+  item="about"
+>
+  <div
+    className="aboutDiv"
+  >
+    <h2>
+      Intro video
+    </h2>
+    <iframe
+      allow="autoplay; encrypted-media"
+      allowFullScreen={true}
+      frameBorder="0"
+      height="425"
+      src="https://www.youtube.com/embed/SWYt4bGmN7w"
+      title="youtube-intro"
+      width="750"
+    />
+  </div>
+  <div
+    className="aboutDiv"
+  >
+    <h3>
+      Why smults?
+    </h3>
+    <p>
+      <a
+        href="https://steemit.com"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        steemit.com
+      </a>
+       
+      allows searches by using only ONE tag, while
+       
+      <a
+        href="https://busy.org/"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        busy.org
+      </a>
+       
+      searches by single user's name, this is inconvenient for those who need to look for more specific posts. Smults is here to address this issue!
+    </p>
+    <h3>
+      Can I add custom tags in the search bar?
+    </h3>
+    <p>
+      Sure! Just start typing and press 'Enter' to include the tag(s) when you are done!
+    </p>
+    <h3>
+      Why '15' trending tags to start with? Why not '18' or '23'?
+    </h3>
+    <p>
+      Well.. That's just my personal preference ;). You can add more custom search tags by youself!
+    </p>
+    <h3>
+      What is this 'Mark first tag as category' checkbox thing?
+    </h3>
+    <p>
+      When you mark it and search, the return results will have their categories as the first tag you are searching for. Isn't that just convenient? ;)
+    </p>
+    <h3>
+      I spotted a nasty error/bug.. Where can I report it?
+    </h3>
+    <p>
+      Head over to this project's
+      <a
+        href="https://github.com/Alvin-Voo/smults"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        github page
+      </a>
+       
+      and log an issue.
+    </p>
+    <h3>
+      I have a great idea for your application! I want to contribute!
+    </h3>
+    <p>
+      Great! Let me know at
+      <a
+        href="https://steemit.com/@alvinvoo"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        @alvinvoo
+      </a>
+      , comment on my post which announces this project, or you can visit this project's
+      <a
+        href="https://github.com/Alvin-Voo/smults"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        github page
+      </a>
+       
+      and log an issue but with the title starting with '[FEATURE]'
+    </p>
+    <h3>
+      Is this free?
+    </h3>
+    <p>
+      Of course! I will let you know when it's not. ;)
+    </p>
+  </div>
+</Layout>
+`;
