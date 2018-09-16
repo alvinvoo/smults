@@ -12,8 +12,10 @@ class ScrollButton extends Component {
     const { scrollStepInPx } = this.props;
     if (window.pageYOffset === 0) {
       clearInterval(intervalId);
+      this.setState({ intervalId: 0 });
+    } else {
+      window.scroll(0, window.pageYOffset - scrollStepInPx);
     }
-    window.scroll(0, window.pageYOffset - scrollStepInPx);
   }
 
   scrollToTop=() => {
