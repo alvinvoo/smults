@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import {
   Dropdown, Button, Checkbox, Popup, Icon,
 } from 'semantic-ui-react';
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^take" }] */
 import { take } from 'lodash';
 import { connect } from 'react-redux';
 import Layout from '../components/Layout';
-import PostList from '../components/PostList';
+import ConnectedPostList from '../components/PostList';
 import ScrollButton from '../components/ScrollButton';
 import { fetchTrendingTags, fetchPosts } from '../actions';
 
-class Search extends Component {
+export class Search extends Component {
   state = {
     tagsOptions: [],
     selectedTags: [],
@@ -28,16 +27,16 @@ class Search extends Component {
     error: '',
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const { fetchTrendingTags } = this.props;
-    fetchTrendingTags().then(() => {
-      const { tagsOptions } = this.props;
-      this.setState({ tagsOptions });
-    });// we only want to fetch in client side once
+    await fetchTrendingTags();
+    // we only want to fetch in client side once
+    const { tagsOptions } = this.props;
+    this.setState({ tagsOptions });
   }
 
   dropDownChange = (e, d) => {
-    this.setState({ selectedTags: _.take(d.value, 5) });
+    this.setState({ selectedTags: take(d.value, 5) });
   }
 
   dropDownAddItem = (e, d) => {
@@ -48,12 +47,12 @@ class Search extends Component {
     });
   }
 
-  search = () => {
+  search = async () => {
     const { selectedTags, selectedFilter, checkedCategory } = this.state;
     const { fetchPosts } = this.props;
     if (selectedTags.length === 0) return;
     this.setState({ searchLoading: true, error: '' });
-    fetchPosts(selectedTags, selectedFilter, checkedCategory).catch(
+    await fetchPosts(selectedTags, selectedFilter, checkedCategory).catch(
       (error) => {
         this.setState({ error: String(error) });
       },
@@ -134,7 +133,7 @@ class Search extends Component {
           </div>
         </div>
         <div className="postList">
-          <PostList />
+          <ConnectedPostList />
           {this.displayError()}
         </div>
         <ScrollButton scrollStepInPx={50} delayInMs={16.66} />
@@ -149,7 +148,7 @@ Search.propTypes = {
   tagsOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
 };
 
-function mapStateToProps({ tags }) {
+export function mapStateToProps({ tags }) {
   return { tagsOptions: tags.trending_tags_options };
 }
 
