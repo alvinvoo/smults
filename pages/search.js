@@ -41,16 +41,17 @@ export class Search extends Component {
   }
 
   dropDownChange = (e, d) => {
-    const selectedTags = take(d.value, 5);
+    const selectedTags = take(d.value.map(val => val.trim()), 5);
     this.setState({ selectedTags });
     if (selectedTags.length > 0) this.setState({ checkedDisabled: false });
     else this.setState({ checkedDisabled: true });
   }
 
   dropDownAddItem = (e, d) => {
+    const value = d.value.trim();
     this.setState((prevState) => {
       const newTags = prevState.tagsOptions;
-      newTags.unshift({ key: d.value, value: d.value, text: d.value });
+      newTags.unshift({ value, text: value });
       return { tagsOptions: newTags };
     });
   }
@@ -72,6 +73,8 @@ export class Search extends Component {
   filterChange = (e, d) => {
     const selectedFilter = d.value;
     this.setState({ selectedFilter });
+    // clear the previously selected author name (if any)
+    this.setState({ authorName: '' });
     if (selectedFilter === 'author') this.setState({ authorInputEnabled: true });
     else this.setState(({ authorInputEnabled: false }));
   }
@@ -91,7 +94,6 @@ export class Search extends Component {
 
   authorSearchChange = async (e, d) => {
     const query = d.searchQuery;
-
     if (query.length < 5) this.lookupAuthorsDebouncer(query);
     else this.lookupAuthorsThrottler(query);
   }
@@ -173,7 +175,7 @@ export class Search extends Component {
               <div className="authorName">
                 <Icon name="at" />
                 <Dropdown
-                  search
+                  search={options => (options)}
                   selection
                   options={authorsOptions}
                   placeholder="username..."
