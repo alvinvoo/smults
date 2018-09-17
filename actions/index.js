@@ -29,7 +29,7 @@ function storeSelectedTags(tags, checkedCategory) {
 }
 
 export function lookupAuthors(search) {
-  const request = client.call('condenser_api', 'lookup_accounts', [search, MAX_AUTHORS]);
+  const request = client.call('condenser_api', 'get_account_reputations', [search, MAX_AUTHORS]);
   return {
     type: LOOKUP_AUTHORS,
     payload: request,
