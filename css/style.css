@@ -11,9 +11,13 @@
   display: flex;
 }
 
+.searchOptionsBar > .authorName{
+  margin-top: -.5em;
+}
+
 .searchOptionsBar > .markyTag{
   position: absolute;
-  left:30%;
+  left: 50%;
 }
 
 .searchOptionsBar > .markyTag > i.icon{
