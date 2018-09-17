@@ -49,6 +49,8 @@
         "no-else-return" : ["error",{ "allowElseIf": true }],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/destructuring-assignment": ["warn","always"],
+        "react/sort-comp": ["warn"],
+        "react/no-array-index-key": ["warn"],
         "jsx-a11y/anchor-is-valid":"off"
     }
 }
