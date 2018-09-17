@@ -2,11 +2,11 @@ import { FETCH_TRENDING_TAGS } from '../actions';
 
 export const initialState = {
   trending_tags_options: [
-    { key: 'life', value: 'life', text: 'life' },
-    { key: 'photography', value: 'photography', text: 'photography' },
-    { key: 'kr', value: 'kr', text: 'kr' },
-    { key: 'steemit', value: 'steemit', text: 'steemit' },
-    { key: 'art', value: 'art', text: 'art' }],
+    { value: 'life', text: 'life' },
+    { value: 'photography', text: 'photography' },
+    { value: 'kr', text: 'kr' },
+    { value: 'steemit', text: 'steemit' },
+    { value: 'art', text: 'art' }],
 };
 
 export default function (state = initialState, action) {
