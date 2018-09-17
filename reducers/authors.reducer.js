@@ -10,7 +10,9 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case LOOKUP_AUTHORS: {
       const authorsList = [...action.payload];
-      const newAuthorsList = authorsList.map(author => ({ value: author, text: author }));
+      const newAuthorsList = authorsList
+        .filter(author => author.reputation > 0)
+        .map(author => ({ value: author.account, text: author.account }));
       return { ...state, authors_search_list: [...newAuthorsList] };
     }
     default:
