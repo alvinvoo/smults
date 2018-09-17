@@ -19,7 +19,6 @@ export default function (state = initialState, action) {
         firstTagIsCategory: action.payload.checkedCategory,
       };
     case FETCH_AND_FILTER_POSTS: {
-      // [...c].map(it=> {return _.pick(it,['id'])})
       const posts = [...action.payload].filter((post) => {
         // first get the tags
         const json = JSON.parse(post.json_metadata);
@@ -45,7 +44,7 @@ export default function (state = initialState, action) {
         // before returning the array
         const fPost = pick(post, POSTFIELDS);
         const json = JSON.parse(post.json_metadata);
-        const image = json.image ? json.image[0] : DEFAULTIMG;
+        const image = json.image && json.image.length > 0 ? json.image[0] : DEFAULTIMG;
         const fBody = `${removeMd(post.body, { useImgAltText: false }).substring(0, 120).replace(/[\r\n]/g, ' ')}...`;
         const fCreated = moment.utc(post.created).fromNow();
 
