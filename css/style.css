@@ -11,9 +11,13 @@
   display: flex;
 }
 
+.searchOptionsBar > .authorName{
+  margin-top: -.5em;
+}
+
 .searchOptionsBar > .markyTag{
   position: absolute;
-  left:30%;
+  left: 50%;
 }
 
 .searchOptionsBar > .markyTag > i.icon{
@@ -50,4 +54,21 @@
 
 .aboutDiv{
   margin: 2em auto;
+}
+
+.errorPage{
+  display: flex;
+  flex-direction: column;
+}
+
+.errorPage > a{
+  position: absolute;
+  z-index: 1;
+  align-self: center;
+  padding-top: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Fira Sans", Avenir, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.errorPage > div{
+  margin-top: -1em;
 }

@@ -2,12 +2,15 @@ import { isEqual, intersection, pick } from 'lodash';
 import removeMd from 'remove-markdown';
 import moment from 'moment';
 import { POSTFIELDS, DEFAULTIMG } from '../config';
-import { STORE_SELECTED_TAGS, FETCH_AND_FILTER_POSTS } from '../actions';
+import {
+  STORE_SELECTED_TAGS, FETCH_AND_FILTER_POSTS, STORED_TAGS, FETCHED_POSTS,
+} from '../actions';
 
 export const initialState = {
   posts: [],
   selectedTags: [],
   firstTagIsCategory: false,
+  reducerState: '',
 };
 
 export default function (state = initialState, action) {
@@ -17,9 +20,9 @@ export default function (state = initialState, action) {
         ...state,
         selectedTags: [...action.payload.tags],
         firstTagIsCategory: action.payload.checkedCategory,
+        reducerState: STORED_TAGS,
       };
     case FETCH_AND_FILTER_POSTS: {
-      // [...c].map(it=> {return _.pick(it,['id'])})
       const posts = [...action.payload].filter((post) => {
         // first get the tags
         const json = JSON.parse(post.json_metadata);
@@ -45,7 +48,7 @@ export default function (state = initialState, action) {
         // before returning the array
         const fPost = pick(post, POSTFIELDS);
         const json = JSON.parse(post.json_metadata);
-        const image = json.image ? json.image[0] : DEFAULTIMG;
+        const image = json.image && json.image.length > 0 ? json.image[0] : DEFAULTIMG;
         const fBody = `${removeMd(post.body, { useImgAltText: false }).substring(0, 120).replace(/[\r\n]/g, ' ')}...`;
         const fCreated = moment.utc(post.created).fromNow();
 
@@ -59,7 +62,7 @@ export default function (state = initialState, action) {
         return fPost;
       });
 
-      return { ...state, posts };
+      return { ...state, posts, reducerState: FETCHED_POSTS };
     }
     default:
       return state;
