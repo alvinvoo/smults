@@ -2,12 +2,15 @@ import { isEqual, intersection, pick } from 'lodash';
 import removeMd from 'remove-markdown';
 import moment from 'moment';
 import { POSTFIELDS, DEFAULTIMG } from '../config';
-import { STORE_SELECTED_TAGS, FETCH_AND_FILTER_POSTS } from '../actions';
+import {
+  STORE_SELECTED_TAGS, FETCH_AND_FILTER_POSTS, STORED_TAGS, FETCHED_POSTS,
+} from '../actions';
 
 export const initialState = {
   posts: [],
   selectedTags: [],
   firstTagIsCategory: false,
+  reducerState: '',
 };
 
 export default function (state = initialState, action) {
@@ -17,6 +20,7 @@ export default function (state = initialState, action) {
         ...state,
         selectedTags: [...action.payload.tags],
         firstTagIsCategory: action.payload.checkedCategory,
+        reducerState: STORED_TAGS,
       };
     case FETCH_AND_FILTER_POSTS: {
       const posts = [...action.payload].filter((post) => {
@@ -58,7 +62,7 @@ export default function (state = initialState, action) {
         return fPost;
       });
 
-      return { ...state, posts };
+      return { ...state, posts, reducerState: FETCHED_POSTS };
     }
     default:
       return state;

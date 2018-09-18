@@ -4,9 +4,11 @@ import {
 } from '../config';
 
 export const FETCH_TRENDING_TAGS = 'FETCH_TRENDING_TAGS';
-export const STORE_SELECTED_TAGS = 'STORE_SELECTED_TAGS';
 export const LOOKUP_AUTHORS = 'LOOKUP_AUTHORS';
+export const STORE_SELECTED_TAGS = 'STORE_SELECTED_TAGS';
+export const STORED_TAGS = 'STORED_TAGS';
 export const FETCH_AND_FILTER_POSTS = 'FETCH_AND_FILTER_POSTS';
+export const FETCHED_POSTS = 'FETCHED_POSTS';
 
 const client = new dsteem.Client(STEEM_API);
 
@@ -21,18 +23,18 @@ export function fetchTrendingTags() {
   };
 }
 
-function storeSelectedTags(tags, checkedCategory) {
-  return {
-    type: STORE_SELECTED_TAGS,
-    payload: { tags, checkedCategory },
-  };
-}
-
 export function lookupAuthors(search) {
   const request = client.call('condenser_api', 'get_account_reputations', [search, MAX_AUTHORS]);
   return {
     type: LOOKUP_AUTHORS,
     payload: request,
+  };
+}
+
+function storeSelectedTags(tags, checkedCategory) {
+  return {
+    type: STORE_SELECTED_TAGS,
+    payload: { tags, checkedCategory },
   };
 }
 
