@@ -8,7 +8,10 @@ import { connect } from 'react-redux';
 import Layout from '../components/Layout';
 import ConnectedPostList from '../components/PostList';
 import ScrollButton from '../components/ScrollButton';
-import { fetchTrendingTags, lookupAuthors, fetchPosts } from '../actions';
+import Notifier, { ERROR, MESSAGE } from '../components/Notifier';
+import {
+  fetchTrendingTags, lookupAuthors, fetchPosts, FETCHED_POSTS,
+} from '../actions';
 
 export class Search extends Component {
   state = {
@@ -26,7 +29,10 @@ export class Search extends Component {
     checkedCategory: false,
     checkedDisabled: true,
     searchLoading: false,
-    error: '',
+    notify: {
+      type: '',
+      message: '',
+    },
     authorName: '',
     authorInputEnabled: false,
     authorsOptions: [],
@@ -38,6 +44,15 @@ export class Search extends Component {
     // we only want to fetch in client side once
     const { tagsOptions } = this.props;
     this.setState({ tagsOptions });
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const { postsState, postsLength } = this.props;
+    if (postsState !== prevProps.postsState) {
+      if (postsState === FETCHED_POSTS && postsLength === 0) {
+        this.setState({ notify: { type: MESSAGE, message: 'Opps. No post found!' } });
+      }
+    }
   }
 
   dropDownChange = (e, d) => {
@@ -61,10 +76,10 @@ export class Search extends Component {
       selectedTags, selectedFilter, checkedCategory, authorName,
     } = this.state;
     const { fetchPosts } = this.props;
-    this.setState({ searchLoading: true, error: '' });
+    this.setState({ notify: { type: '', message: '' }, searchLoading: true });
     await fetchPosts(selectedTags, selectedFilter, authorName, checkedCategory).catch(
       (error) => {
-        this.setState({ error: String(error) });
+        this.setState({ notify: { type: ERROR, message: String(error) } });
       },
     );
     this.setState({ searchLoading: false });
@@ -107,24 +122,6 @@ export class Search extends Component {
     this.setState({ checkedCategory: d.checked });
   }
 
-  displayError = () => {
-    const { error } = this.state;
-    if (error) {
-      return (
-        <div className="error">
-          <p>{error}</p>
-          <p>
-            Sorry, something is broken. Take a screenshot and notify
-            <a href="https://steemit.com/@alvinvoo" target="_blank" rel="noopener noreferrer">
-              {' '}
-              @alvinvoo
-            </a>
-          </p>
-        </div>
-      );
-    }
-  }
-
   render() {
     const {
       tagsOptions, selectedTags,
@@ -132,6 +129,7 @@ export class Search extends Component {
       searchLoading, checkedCategory,
       checkedDisabled, authorName,
       authorInputEnabled, authorsOptions,
+      notify,
     } = this.state;
     return (
       <Layout item="search">
@@ -199,8 +197,11 @@ export class Search extends Component {
           </div>
         </div>
         <div className="postList">
-          <ConnectedPostList />
-          {this.displayError()}
+          {
+            notify.type
+              ? <Notifier type={notify.type} message={notify.message} />
+              : <ConnectedPostList />
+          }
         </div>
         <ScrollButton scrollStepInPx={50} delayInMs={16.66} />
       </Layout>
@@ -214,10 +215,17 @@ Search.propTypes = {
   lookupAuthors: PropTypes.func.isRequired,
   tagsOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   authorsOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  postsLength: PropTypes.number.isRequired,
+  postsState: PropTypes.string.isRequired,
 };
 
-export function mapStateToProps({ tags, authors }) {
-  return { tagsOptions: tags.trending_tags_options, authorsOptions: authors.authors_search_list };
+export function mapStateToProps({ tags, authors, posts }) {
+  return {
+    tagsOptions: tags.trending_tags_options,
+    authorsOptions: authors.authors_search_list,
+    postsLength: posts.posts.length,
+    postsState: posts.reducerState,
+  };
 }
 
 export default connect(mapStateToProps, { fetchTrendingTags, lookupAuthors, fetchPosts })(Search);
