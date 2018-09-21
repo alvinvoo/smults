@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
     case FETCH_TRENDING_TAGS: {
       const trendingTags = [...action.payload];
       const newTrendingTagsOptions = trendingTags.filter(tag => tag.name)
-        .map(tag => ({ key: tag.name, value: tag.name, text: tag.name }));
+        .map(tag => ({ value: tag.name, text: tag.name }));
       return { ...state, trending_tags_options: [...newTrendingTagsOptions] };
     }
     default:
