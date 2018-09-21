@@ -1,17 +1,20 @@
 export default [
   {
-    tags: ['life', 'photography'],
-    filter: 'trending',
-    checkedCategory: true,
+    tags: [],
+    filter: 'created',
+    author: '',
+    checkedCategory: false,
   },
   {
-    tags: ['steemit'],
-    filter: 'created',
+    tags: ['life', 'photography'],
+    filter: 'trending',
+    author: '',
     checkedCategory: false,
   },
   {
     tags: ['utopian-io', 'development'],
-    filter: 'created',
+    filter: 'author',
+    author: 'alvinvoo',
     checkedCategory: false,
   },
 ];
