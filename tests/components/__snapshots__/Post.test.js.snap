@@ -1,6 +1,92 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render a single post correctly 1`] = `
+exports[`should render a 'resteem' label when filtering by author and encounter resteemded post 1`] = `
+<Item
+  href="http://steemit.com/some-permlink-too"
+  target="_blank"
+>
+  <ItemImage
+    size="small"
+    src="http://image2.com"
+  />
+  <ItemContent>
+    <ItemHeader>
+      this is a title too!
+    </ItemHeader>
+    <ItemMeta>
+      <Label>
+        <Icon
+          as="i"
+          name="share"
+        />
+        resteemed
+      </Label>
+      <Label
+        color="purple"
+      >
+        dummy2
+      </Label>
+       
+      in
+       
+      <Label
+        color="teal"
+        tag={true}
+      >
+        sun
+      </Label>
+       
+      •
+       
+      6 hours ago
+    </ItemMeta>
+    <ItemDescription>
+      text body2
+    </ItemDescription>
+    <ItemExtra>
+      <Icon
+        as="i"
+        name="dollar"
+      />
+      105.001 SBD
+      <Icon
+        as="i"
+        name="sort up"
+      />
+      2
+      <Icon
+        as="i"
+        name="comment outline"
+      />
+      12
+      <span
+        style={
+          Object {
+            "margin": "0 .5em",
+          }
+        }
+      />
+      <Label
+        key="0"
+      >
+        tag4
+      </Label>
+      <Label
+        key="1"
+      >
+        tag5
+      </Label>
+      <Label
+        key="2"
+      >
+        tag6
+      </Label>
+    </ItemExtra>
+  </ItemContent>
+</Item>
+`;
+
+exports[`should render a single post by author correctly 1`] = `
 <Item
   href="http://steemit.com/some-permlink"
   target="_blank"
@@ -14,6 +100,7 @@ exports[`should render a single post correctly 1`] = `
       this is a dummy title
     </ItemHeader>
     <ItemMeta>
+      <div />
       <Label
         color="purple"
       >
@@ -41,7 +128,7 @@ exports[`should render a single post correctly 1`] = `
         as="i"
         name="dollar"
       />
-      65
+      65.012 SBD
       <Icon
         as="i"
         name="sort up"
@@ -60,17 +147,17 @@ exports[`should render a single post correctly 1`] = `
         }
       />
       <Label
-        key="tag1"
+        key="0"
       >
         tag1
       </Label>
       <Label
-        key="tag2"
+        key="1"
       >
         tag2
       </Label>
       <Label
-        key="tag3"
+        key="2"
       >
         tag3
       </Label>
