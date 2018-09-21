@@ -32,7 +32,7 @@ export default () => (
       <p>Sure! Just start typing and press &apos;Enter&apos; to include the tag(s) when you are done!</p>
       <h3>Can I search by &lsquo;Author&rsquo;?</h3>
       <p>Of course! Just switch the &lsquo;Filter tags by..&rsquo; filter to &lsquo;Author&rsquo;, an input box will appear to the right where you can start typing and look for your favorite author! (Much like busy.org&apos;s search bar)</p>
-      <p>You can also further filter their posts down by searching with tags!</p>
+      <p>You can also further filter his or her posts down by searching with tags!</p>
       <h3>Why &apos;15&apos; trending tags to start with? Why not &apos;18&apos; or &apos;23&apos;?</h3>
       <p>Well.. That&apos;s just my personal preference ;). You can add more custom search tags by youself!</p>
       <h3>What is this &apos;Mark first tag as category&apos; checkbox thing?</h3>
