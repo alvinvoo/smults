@@ -1,5 +1,211 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing on unconnected Search Testing dropdown input for author's name search should render the .authorName div with icon and dropdown when filter = author 1`] = `
+<Layout
+  item="search"
+>
+  <div
+    className="searchBar"
+  >
+    <Dropdown
+      additionLabel="Add "
+      additionPosition="top"
+      allowAdditions={true}
+      closeOnBlur={true}
+      deburr={false}
+      fluid={true}
+      icon="search"
+      minCharacters={1}
+      multiple={true}
+      noResultsMessage="No results found."
+      onAddItem={[Function]}
+      onChange={[Function]}
+      openOnFocus={true}
+      options={
+        Array [
+          Object {
+            "text": "life",
+            "value": "life",
+          },
+          Object {
+            "text": "photography",
+            "value": "photography",
+          },
+          Object {
+            "text": "kr",
+            "value": "kr",
+          },
+          Object {
+            "text": "steemit",
+            "value": "steemit",
+          },
+          Object {
+            "text": "art",
+            "value": "art",
+          },
+          Object {
+            "text": "yatch",
+            "value": "yatch",
+          },
+          Object {
+            "text": "crypto",
+            "value": "crypto",
+          },
+          Object {
+            "text": "cake",
+            "value": "cake",
+          },
+          Object {
+            "text": "chalk",
+            "value": "chalk",
+          },
+          Object {
+            "text": "zebra",
+            "value": "zebra",
+          },
+        ]
+      }
+      placeholder="Insert your tags here. Or leave empty to search for all posts..."
+      renderLabel={[Function]}
+      search={true}
+      searchInput="text"
+      selectOnBlur={true}
+      selectOnNavigation={true}
+      selection={true}
+      value={Array []}
+      wrapSelection={true}
+    />
+    <Button
+      as="button"
+      loading={false}
+      onClick={[Function]}
+      positive={true}
+      role="button"
+    >
+       
+      Search
+    </Button>
+  </div>
+  <div
+    className="searchOptionsBar"
+  >
+    <div>
+      Filter tags by
+       
+       
+      <Dropdown
+        additionLabel="Add "
+        additionPosition="top"
+        closeOnBlur={true}
+        deburr={false}
+        icon="dropdown"
+        inline={true}
+        minCharacters={1}
+        noResultsMessage="No results found."
+        onChange={[Function]}
+        openOnFocus={true}
+        options={
+          Array [
+            Object {
+              "text": "New",
+              "value": "created",
+            },
+            Object {
+              "text": "Trending",
+              "value": "trending",
+            },
+            Object {
+              "text": "Hot",
+              "value": "hot",
+            },
+            Object {
+              "text": "Active",
+              "value": "active",
+            },
+            Object {
+              "text": "Promoted",
+              "value": "promoted",
+            },
+            Object {
+              "text": "Author",
+              "value": "author",
+            },
+          ]
+        }
+        renderLabel={[Function]}
+        searchInput="text"
+        selectOnBlur={true}
+        selectOnNavigation={true}
+        value="author"
+        wrapSelection={true}
+      />
+    </div>
+    <div
+      className="authorName"
+    >
+      <Icon
+        as="i"
+        name="at"
+      />
+      <Dropdown
+        additionLabel="Add "
+        additionPosition="top"
+        closeOnBlur={true}
+        deburr={false}
+        icon="dropdown"
+        minCharacters={1}
+        noResultsMessage="No results found."
+        onChange={[Function]}
+        onSearchChange={[Function]}
+        openOnFocus={true}
+        options={Array []}
+        placeholder="username..."
+        renderLabel={[Function]}
+        search={[Function]}
+        searchInput="text"
+        selectOnBlur={true}
+        selectOnNavigation={true}
+        selection={true}
+        value=""
+        wrapSelection={true}
+      />
+    </div>
+    <div
+      className="markyTag"
+    >
+      <Checkbox
+        checked={false}
+        disabled={true}
+        label="Mark first tag as category"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <Popup
+        content="Return search results which match the given first tag as their categories."
+        keepInViewPort={true}
+        on="hover"
+        position="top left"
+        trigger={
+          <Icon
+            as="i"
+            name="question circle outline"
+          />
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="postList"
+  >
+    <Connect(PostList) />
+  </div>
+  <ScrollButton
+    delayInMs={16.66}
+    scrollStepInPx={50}
+  />
+</Layout>
+`;
+
 exports[`Testing on unconnected Search Testing search function should set error state and display error if fetchPost returned with error 1`] = `
 <Layout
   item="search"
@@ -24,58 +230,48 @@ exports[`Testing on unconnected Search Testing search function should set error 
       options={
         Array [
           Object {
-            "key": "life",
             "text": "life",
             "value": "life",
           },
           Object {
-            "key": "photography",
             "text": "photography",
             "value": "photography",
           },
           Object {
-            "key": "kr",
             "text": "kr",
             "value": "kr",
           },
           Object {
-            "key": "steemit",
             "text": "steemit",
             "value": "steemit",
           },
           Object {
-            "key": "art",
             "text": "art",
             "value": "art",
           },
           Object {
-            "key": "yatch",
             "text": "yatch",
             "value": "yatch",
           },
           Object {
-            "key": "crypto",
             "text": "crypto",
             "value": "crypto",
           },
           Object {
-            "key": "cake",
             "text": "cake",
             "value": "cake",
           },
           Object {
-            "key": "chalk",
             "text": "chalk",
             "value": "chalk",
           },
           Object {
-            "key": "zebra",
             "text": "zebra",
             "value": "zebra",
           },
         ]
       }
-      placeholder="Insert your tags here..."
+      placeholder="Insert your tags here. Or leave empty to search for all posts..."
       renderLabel={[Function]}
       search={true}
       searchInput="text"
@@ -141,6 +337,10 @@ exports[`Testing on unconnected Search Testing search function should set error 
               "text": "Promoted",
               "value": "promoted",
             },
+            Object {
+              "text": "Author",
+              "value": "author",
+            },
           ]
         }
         renderLabel={[Function]}
@@ -151,11 +351,13 @@ exports[`Testing on unconnected Search Testing search function should set error 
         wrapSelection={true}
       />
     </div>
+    <div />
     <div
       className="markyTag"
     >
       <Checkbox
         checked={false}
+        disabled={false}
         label="Mark first tag as category"
         onChange={[Function]}
         type="checkbox"
@@ -177,25 +379,10 @@ exports[`Testing on unconnected Search Testing search function should set error 
   <div
     className="postList"
   >
-    <Connect(PostList) />
-    <div
-      className="error"
-    >
-      <p>
-        Error: some kinda error
-      </p>
-      <p>
-        Sorry, something is broken. Take a screenshot and notify
-        <a
-          href="https://steemit.com/@alvinvoo"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-           
-          @alvinvoo
-        </a>
-      </p>
-    </div>
+    <Notifier
+      message="Error: some kinda error"
+      type="ERROR"
+    />
   </div>
   <ScrollButton
     delayInMs={16.66}
@@ -228,58 +415,48 @@ exports[`Testing on unconnected Search should render Search page correctly 1`] =
       options={
         Array [
           Object {
-            "key": "life",
             "text": "life",
             "value": "life",
           },
           Object {
-            "key": "photography",
             "text": "photography",
             "value": "photography",
           },
           Object {
-            "key": "kr",
             "text": "kr",
             "value": "kr",
           },
           Object {
-            "key": "steemit",
             "text": "steemit",
             "value": "steemit",
           },
           Object {
-            "key": "art",
             "text": "art",
             "value": "art",
           },
           Object {
-            "key": "yatch",
             "text": "yatch",
             "value": "yatch",
           },
           Object {
-            "key": "crypto",
             "text": "crypto",
             "value": "crypto",
           },
           Object {
-            "key": "cake",
             "text": "cake",
             "value": "cake",
           },
           Object {
-            "key": "chalk",
             "text": "chalk",
             "value": "chalk",
           },
           Object {
-            "key": "zebra",
             "text": "zebra",
             "value": "zebra",
           },
         ]
       }
-      placeholder="Insert your tags here..."
+      placeholder="Insert your tags here. Or leave empty to search for all posts..."
       renderLabel={[Function]}
       search={true}
       searchInput="text"
@@ -340,6 +517,10 @@ exports[`Testing on unconnected Search should render Search page correctly 1`] =
               "text": "Promoted",
               "value": "promoted",
             },
+            Object {
+              "text": "Author",
+              "value": "author",
+            },
           ]
         }
         renderLabel={[Function]}
@@ -350,11 +531,13 @@ exports[`Testing on unconnected Search should render Search page correctly 1`] =
         wrapSelection={true}
       />
     </div>
+    <div />
     <div
       className="markyTag"
     >
       <Checkbox
         checked={false}
+        disabled={true}
         label="Mark first tag as category"
         onChange={[Function]}
         type="checkbox"

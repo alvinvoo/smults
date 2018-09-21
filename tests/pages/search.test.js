@@ -1,7 +1,16 @@
 import React from 'react';
+import _ from 'lodash';
 import { shallow } from 'enzyme';
 import { Search, mapStateToProps } from '../../pages/search';
+import { ERROR, MESSAGE } from '../../components/Notifier';
+import { FETCHED_POSTS } from '../../actions';
 import tags from '../fixtures/trendingTagsList';
+import authors from '../fixtures/authorsList';
+import postList from '../fixtures/postList';
+
+jest.unmock('lodash');
+_.debounce = jest.fn((func, delay) => (func));
+_.throttle = jest.fn((func, delay) => (func));
 
 /**
  * There's no direct test on the connected search component because the main
@@ -13,18 +22,26 @@ import tags from '../fixtures/trendingTagsList';
 */
 describe('Testing on unconnected Search', () => {
   let wrapper;
+  // all the mock functions that are avail in props needed to be tested
+  // to see whther they are called
   let fetchPosts;
   let fetchTrendingTags;
+  let lookupAuthors;
   beforeEach(async () => {
     fetchPosts = jest.fn(() => Promise.resolve(true));
     fetchTrendingTags = jest.fn(() => Promise.resolve(true));
+    lookupAuthors = jest.fn(() => Promise.resolve(true));
     // shallow will call componentDidMount() which will fetchTrendingTags - which is async function
     wrapper = await shallow(
       <Search
         fetchPosts={fetchPosts}
         fetchTrendingTags={fetchTrendingTags}
+        lookupAuthors={lookupAuthors}
         tagsOptions={[...tags]}
         // to pass only a COPY of tags, if passed direct, tagsOptions will refer to tags
+        authorsOptions={[]}
+        postsLength={0}
+        postsState=""
       />,
     );
   });
@@ -48,8 +65,8 @@ describe('Testing on unconnected Search', () => {
     test('should add tag to dropdown', () => {
       const tagToAdd = 'whale';
       wrapper.find('Dropdown').at(0).prop('onAddItem')({}, { value: tagToAdd });
-      expect(wrapper.state('tagsOptions')).toEqual([{ key: tagToAdd, value: tagToAdd, text: tagToAdd }, ...tags]);
-      expect(wrapper.find('Dropdown').at(0).prop('options')).toEqual([{ key: tagToAdd, value: tagToAdd, text: tagToAdd }, ...tags]);
+      expect(wrapper.state('tagsOptions')).toEqual([{ value: tagToAdd, text: tagToAdd }, ...tags]);
+      expect(wrapper.find('Dropdown').at(0).prop('options')).toEqual([{ value: tagToAdd, text: tagToAdd }, ...tags]);
     });
 
     test('should change selected tags accordingly', () => {
@@ -73,14 +90,7 @@ describe('Testing on unconnected Search', () => {
       wrapper.find('Dropdown').at(0).prop('onChange')({}, { value: tagsToSelect });
       wrapper.find('Button').simulate('click');
       expect(fetchPosts).toHaveBeenCalledTimes(1);
-      expect(fetchPosts).toHaveBeenCalledWith(tagsToSelect, 'created', false);
-    });
-
-    // might have to remove very soon
-    test('should not search if no tags are selected', () => {
-      wrapper.find('Button').simulate('click');
-      expect(wrapper.state('selectedTags')).toEqual([]);
-      expect(fetchPosts).toHaveBeenCalledTimes(0);
+      expect(fetchPosts).toHaveBeenCalledWith(tagsToSelect, 'created', '', false);
     });
 
     test('should set error state and display error if fetchPost returned with error', async () => {
@@ -94,10 +104,31 @@ describe('Testing on unconnected Search', () => {
       // wait for ALL async functions (including async inner function) to return
       await Promise.all(wrapper.find('Button').simulate('click'));
       expect(fetchPosts).toHaveBeenCalledTimes(1);
-      expect(wrapper.state('error')).toBe(`Error: ${error}`);
-      expect(wrapper.find('.error')).toBeTruthy();
-      expect(wrapper.find('.error > p:first-child').text()).toBe(`Error: ${error}`);
+      expect(wrapper.state('notify')).toEqual({
+        type: ERROR,
+        message: `Error: ${error}`,
+      });
+      expect(wrapper.find('Notifier')).toHaveLength(1);
+      expect(wrapper.find('Notifier').prop('message')).toBe(`Error: ${error}`);
+      expect(wrapper.find('Notifier').prop('type')).toBe(ERROR);
       expect(wrapper).toMatchSnapshot();
+    });
+
+    test('should return not return any notification message if fetchPost returned with posts', () => {
+      wrapper.setProps({ postsState: FETCHED_POSTS, postsLength: 10 });
+      expect(wrapper.state('notify')).toEqual({
+        type: '',
+        message: '',
+      });
+    });
+
+    test('should return a custom \'no post found\' message if fetchPost returned with no post', () => {
+      const message = 'Opps. No post found!';
+      wrapper.setProps({ postsState: FETCHED_POSTS, postsLength: 0 });
+      expect(wrapper.state('notify')).toEqual({
+        type: MESSAGE,
+        message,
+      });
     });
   });
 
@@ -115,7 +146,8 @@ describe('Testing on unconnected Search', () => {
       await Promise.all(wrapper.find('Button').simulate('click'));
 
       expect(wrapper.instance().setState).toBeCalledTimes(2);
-      expect(wrapper.instance().setState).toHaveBeenNthCalledWith(1, { searchLoading: true, error: '' });
+      expect(wrapper.instance().setState).toHaveBeenNthCalledWith(1,
+        { notify: { message: '', type: '' }, searchLoading: true });
       expect(wrapper.instance().setState).toHaveBeenLastCalledWith({ searchLoading: false });
     });
 
@@ -143,6 +175,80 @@ describe('Testing on unconnected Search', () => {
       });
       expect(wrapper.state('selectedFilter')).toBe(value);
       expect(wrapper.find('Dropdown').at(1).prop('value')).toBe(value);
+      expect(wrapper.state('authorInputEnabled')).toBe(false);
+    });
+
+    test('should change filter for author accordingly', () => {
+      const filters = wrapper.state('filterOptions');
+      const { value } = filters[5];
+      expect(wrapper.state('authorName')).toBe('');
+      expect(value).toBe('author');
+      wrapper.find('Dropdown').at(1).prop('onChange')({}, {
+        value,
+      });
+      expect(wrapper.state('selectedFilter')).toBe('author');
+      expect(wrapper.find('Dropdown').at(1).prop('value')).toBe('author');
+      expect(wrapper.state('authorInputEnabled')).toBe(true);
+    });
+  });
+
+  describe('Testing dropdown input for author\'s name search', () => {
+    function triggerAuthorFilter() {
+      const filters = wrapper.state('filterOptions');
+      const { value } = filters[5];
+      expect(value).toBe('author');
+      wrapper.find('Dropdown').at(1).prop('onChange')({}, {
+        value,
+      });
+    }
+
+    test('should render the .authorName div with icon and dropdown when filter = author', () => {
+      triggerAuthorFilter();
+      expect(wrapper.find('.authorName')).toHaveLength(1);
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    test('should render author name correctly when entered', () => {
+      triggerAuthorFilter();
+      const value = 'alvin';
+      wrapper.find('Dropdown').at(2).prop('onChange')({}, {
+        value,
+      });
+      expect(wrapper.state('authorName')).toBe(value);
+      expect(wrapper.find('Dropdown').at(2).prop('value')).toBe(value);
+    });
+
+    test('should search for author (search query < 5 characters) properly', async () => {
+      wrapper.setProps({ authorsOptions: authors });
+      triggerAuthorFilter();
+      expect(wrapper.state('authorsOptions')).toHaveLength(0);
+      await wrapper.find('Dropdown').at(2).prop('onSearchChange')({}, {
+        searchQuery: 'alvi',
+      });
+      expect(lookupAuthors).toBeCalledTimes(1);
+      expect(lookupAuthors).toBeCalledWith('alvi');
+      expect(wrapper.state('authorsOptions')).toHaveLength(3);
+    });
+
+    test('should search for author (search query >= 5 characters) properly', async () => {
+      wrapper.setProps({ authorsOptions: authors });
+      _.throttle.mockClear();
+      triggerAuthorFilter();
+      expect(wrapper.state('authorsOptions')).toHaveLength(0);
+      await wrapper.find('Dropdown').at(2).prop('onSearchChange')({}, {
+        searchQuery: 'alvin',
+      });
+      expect(lookupAuthors).toBeCalledTimes(1);
+      expect(lookupAuthors).toBeCalledWith('alvin');
+      expect(wrapper.state('authorsOptions')).toHaveLength(3);
+    });
+
+    test('search function should return all options by default', () => {
+      triggerAuthorFilter();
+      const ret = (wrapper.find('Dropdown').at(2).prop('search')(
+        authors,
+      ));
+      expect(ret).toBe(authors);
     });
   });
 
@@ -152,23 +258,45 @@ describe('Testing on unconnected Search', () => {
       expect(wrapper.find('Checkbox').prop('checked')).toBe(false);
     });
 
-    test('should change accordingly', () => {
+    test('should remained unchecked (disabled) when there\'s no tag selected', () => {
+      const tagsToSelect = [];
+      wrapper.find('Dropdown').at(0).prop('onChange')({}, { value: tagsToSelect });
+      expect(wrapper.state('checkedDisabled')).toBe(true);
+      expect(wrapper.find('Checkbox').prop('checked')).toBe(false);
+    });
+
+    test('should available to be checked (enabled) when there\'s tag selected', () => {
+      const tagsToSelect = ['laundry', 'sewing machine'];
+      expect(wrapper.state('checkedDisabled')).toBe(true);
+      wrapper.find('Dropdown').at(0).prop('onChange')({}, { value: tagsToSelect });
       wrapper.find('Checkbox').prop('onChange')({}, {
         checked: true,
       });
+      expect(wrapper.state('checkedDisabled')).toBe(false);
       expect(wrapper.state('checkedCategory')).toBe(true);
       expect(wrapper.find('Checkbox').prop('checked')).toBe(true);
     });
   });
 });
 
-test('mapStateToProps should return props correctly', () => {
+test('mapStateToProps should return props correctly (separate test)', () => {
+  const reducerState = 'STORED_TAGS';
   const props = mapStateToProps({
     tags: {
       trending_tags_options: tags,
     },
+    authors: {
+      authors_search_list: authors,
+    },
+    posts: {
+      posts: postList,
+      reducerState,
+    },
   });
   expect(props).toEqual({
     tagsOptions: tags,
+    authorsOptions: authors,
+    postsLength: 2,
+    postsState: reducerState,
   });
 });
