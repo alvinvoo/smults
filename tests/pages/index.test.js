@@ -7,7 +7,7 @@ test('should render Index page properly ', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should have a static getInitialProps method for connected Index', () => {
-  const ret = Index.getInitialProps({ reduxStore: '', req: true });
+test('should have a static getInitialProps method for connected Index', async () => {
+  const ret = await Index.getInitialProps({ reduxStore: '', req: true });
   expect(ret).toEqual({ isServer: true });
 });

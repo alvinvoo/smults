@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ERROR display correctly 1`] = `
+<div
+  className="error"
+>
+  <p>
+    some error message
+  </p>
+  <p>
+    Sorry, something is broken. Take a screenshot and notify
+    <a
+      href="https://steemit.com/@alvinvoo"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+       
+      @alvinvoo
+    </a>
+  </p>
+</div>
+`;
+
+exports[`should render MESSAGE display correctly 1`] = `
+<p>
+  some message
+</p>
+`;
+
+exports[`should return an empty <DIV /> by default 1`] = `<div />`;

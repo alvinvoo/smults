@@ -53,6 +53,7 @@ export default function (state = initialState, action) {
         const fCreated = moment.utc(post.created).fromNow();
 
         // add back to fPost
+        fPost.resteemed = fPost.resteemed ? fPost.resteemed : undefined;
         fPost.image = image;
         fPost.tags = json.tags;
         fPost.body = fBody;

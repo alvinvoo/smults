@@ -54,6 +54,15 @@ exports[`should render About page 1`] = `
       Sure! Just start typing and press 'Enter' to include the tag(s) when you are done!
     </p>
     <h3>
+      Can I search by ‘Author’?
+    </h3>
+    <p>
+      Of course! Just switch the ‘Filter tags by..’ filter to ‘Author’, an input box will appear to the right where you can start typing and look for your favorite author! (Much like busy.org's search bar)
+    </p>
+    <p>
+      You can also further filter their posts down by searching with tags!
+    </p>
+    <h3>
       Why '15' trending tags to start with? Why not '18' or '23'?
     </h3>
     <p>
@@ -70,6 +79,7 @@ exports[`should render About page 1`] = `
     </h3>
     <p>
       Head over to this project's
+       
       <a
         href="https://github.com/Alvin-Voo/smults"
         rel="noopener noreferrer"
@@ -85,6 +95,7 @@ exports[`should render About page 1`] = `
     </h3>
     <p>
       Great! Let me know at
+       
       <a
         href="https://steemit.com/@alvinvoo"
         rel="noopener noreferrer"
@@ -92,7 +103,8 @@ exports[`should render About page 1`] = `
       >
         @alvinvoo
       </a>
-      , comment on my post which announces this project, or you can visit this project's
+      , comment on my post which announces this project, hit me up in discord (alvinvoo#3009) or you can visit this project's
+       
       <a
         href="https://github.com/Alvin-Voo/smults"
         rel="noopener noreferrer"
@@ -101,7 +113,7 @@ exports[`should render About page 1`] = `
         github page
       </a>
        
-      and log an issue but with the title starting with '[FEATURE]'
+      and log a ‘Feature request’ under the issue page.
     </p>
     <h3>
       Is this free?

@@ -16,13 +16,15 @@ exports[`Shallow rendering on unconnected PostList should render correctly 1`] =
         "id": 123,
         "image": "http://image.com",
         "net_votes": "213",
-        "pending_payout_value": "65",
+        "pending_payout_value": "65.012 SBD",
+        "resteemd": undefined,
         "tags": Array [
           "tag1",
           "tag2",
           "tag3",
         ],
         "title": "this is a dummy title",
+        "total_payout_value": "0.000 SBD",
         "url": "http://steemit.com/some-permlink",
       }
     }
@@ -39,66 +41,15 @@ exports[`Shallow rendering on unconnected PostList should render correctly 1`] =
         "id": 124,
         "image": "http://image2.com",
         "net_votes": "2",
-        "pending_payout_value": "105",
+        "pending_payout_value": "0.000 SBD",
+        "resteemed": true,
         "tags": Array [
           "tag4",
           "tag5",
           "tag6",
         ],
         "title": "this is a title too!",
-        "url": "http://steemit.com/some-permlink-too",
-      }
-    }
-  />
-</ItemGroup>
-`;
-
-exports[`Shallow rendering on unconnected component should render correctly 1`] = `
-<ItemGroup
-  link={true}
->
-  <Post
-    key="123"
-    post={
-      Object {
-        "author": "dummy",
-        "body": "text body",
-        "category": "moon",
-        "children": "24",
-        "created": "5 hours ago",
-        "id": 123,
-        "image": "http://image.com",
-        "net_votes": "213",
-        "pending_payout_value": "65",
-        "tags": Array [
-          "tag1",
-          "tag2",
-          "tag3",
-        ],
-        "title": "this is a dummy title",
-        "url": "http://steemit.com/some-permlink",
-      }
-    }
-  />
-  <Post
-    key="124"
-    post={
-      Object {
-        "author": "dummy2",
-        "body": "text body2",
-        "category": "sun",
-        "children": "12",
-        "created": "6 hours ago",
-        "id": 124,
-        "image": "http://image2.com",
-        "net_votes": "2",
-        "pending_payout_value": "105",
-        "tags": Array [
-          "tag4",
-          "tag5",
-          "tag6",
-        ],
-        "title": "this is a title too!",
+        "total_payout_value": "105.001 SBD",
         "url": "http://steemit.com/some-permlink-too",
       }
     }

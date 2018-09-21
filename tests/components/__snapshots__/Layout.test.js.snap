@@ -8,12 +8,6 @@ exports[`should render Layout with item and children 1`] = `
     }
   }
 >
-  <SideEffect(Head)>
-    <link
-      href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"
-      rel="stylesheet"
-    />
-  </SideEffect(Head)>
   <Header
     item="search"
   />
