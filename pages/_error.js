@@ -22,4 +22,4 @@ export default class MyError extends React.Component {
 
 MyError.propTypes = {
   statusCode: PropTypes.number.isRequired,
-}
+};
