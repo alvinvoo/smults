@@ -103,14 +103,14 @@ export class Search extends Component {
 
   // since debounce and throttle functions *returns* the executable function
   // they are declared here
-  lookupAuthorsDebouncer = debounce(this.asyncLookupAuthors, 150);
+  lookupAuthorsDebouncer = debounce(this.asyncLookupAuthors, 300);
 
-  lookupAuthorsThrottler = throttle(this.asyncLookupAuthors, 150);
+  lookupAuthorsThrottler = throttle(this.asyncLookupAuthors, 300);
 
   authorSearchChange = async (e, d) => {
     const query = d.searchQuery;
-    if (query.length < 5) this.lookupAuthorsDebouncer(query);
-    else this.lookupAuthorsThrottler(query);
+    if (query.length < 5) this.lookupAuthorsThrottler(query);
+    else this.lookupAuthorsDebouncer(query);
   }
 
   authorChange = (e, d) => {
